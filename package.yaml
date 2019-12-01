@@ -26,8 +26,8 @@ library:
   source-dirs: src
 
 tests:
-  aoc2019-test:
-    main:                Spec.hs
+  aoc2019-day1-test:
+    main:                Day1Spec.hs
     source-dirs:         test
     ghc-options:
     - -threaded
