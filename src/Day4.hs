@@ -6,13 +6,8 @@ module Day4
   ) where
 
 passwordsMeetingExtendedCriteria :: String -> Int
-passwordsMeetingExtendedCriteria range = do
-  let parts = wordsWhen (== '-') range
-  let x1 = parts !! 0
-  let x2 = parts !! 1
-  let p1 = read x1 :: Int
-  let p2 = read x2 :: Int
-  length [password | password <- [p1 .. p2], meetsExtendedCriteria (show password)]
+passwordsMeetingExtendedCriteria range =
+  length [password | password <- passwordsInRange range, meetsExtendedCriteria password]
 
 meetsExtendedCriteria :: String -> Bool
 meetsExtendedCriteria password =
@@ -36,13 +31,18 @@ containsPartOfLargerGroup :: String -> Bool
 containsPartOfLargerGroup password = True
 
 passwordsMeetingCriteria :: String -> Int
-passwordsMeetingCriteria range = do
+passwordsMeetingCriteria range =
+  length [password | password <- passwordsInRange range, meetsCriteria password]
+
+passwordsInRange :: String -> [String]
+passwordsInRange range = do
+  let (from, to) = parseRange range
+  [show password | password <- [from .. to]]
+
+parseRange :: String -> (Int, Int)
+parseRange range = do
   let parts = wordsWhen (== '-') range
-  let x1 = parts !! 0
-  let x2 = parts !! 1
-  let p1 = read x1 :: Int
-  let p2 = read x2 :: Int
-  length [password | password <- [p1 .. p2], meetsCriteria (show password)]
+  (read (head parts) :: Int, read (parts !! 1) :: Int)
 
 wordsWhen :: (Char -> Bool) -> String -> [String]
 wordsWhen p s =
