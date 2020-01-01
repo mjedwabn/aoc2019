@@ -63,10 +63,10 @@ adjacentDigits :: (Char, Char) -> Bool
 adjacentDigits = uncurry (==)
 
 neverDecreases :: String -> Bool
-neverDecreases password = all nonDescendingPair (pairs password)
+neverDecreases password = all nonDecreasingPair (pairs password)
 
-nonDescendingPair :: (Char, Char) -> Bool
-nonDescendingPair = uncurry (<=)
+nonDecreasingPair :: (Char, Char) -> Bool
+nonDecreasingPair = uncurry (<=)
 
 pairs :: String -> [(Char, Char)]
 pairs password = zip password (drop 1 password)
