@@ -16,9 +16,8 @@ meetsExtendedCriteria password =
   twoAdjacentDigitsAreSameAndNotPartOfBiggerGroup password
 
 twoAdjacentDigitsAreSameAndNotPartOfBiggerGroup :: String -> Bool
-twoAdjacentDigitsAreSameAndNotPartOfBiggerGroup password = do
-  let curried = adjacentDigitsAndNotPartOfBiggerGroup password
-  any curried (pairs password)
+twoAdjacentDigitsAreSameAndNotPartOfBiggerGroup password =
+  any (adjacentDigitsAndNotPartOfBiggerGroup password) (pairs password)
 
 adjacentDigitsAndNotPartOfBiggerGroup :: String -> (Char, Char) -> Bool
 adjacentDigitsAndNotPartOfBiggerGroup password pair =
