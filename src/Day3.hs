@@ -1,9 +1,31 @@
 module Day3
   ( closestCross
   , closestCrossDistance
+  , fewestCombinedStepsIntersection
   ) where
 
-import           Data.List (sortBy)
+import           Data.List (sortBy, elemIndex)
+import Data.Maybe (fromMaybe)
+
+fewestCombinedStepsIntersection :: String -> String -> Int
+fewestCombinedStepsIntersection w1 w2 = do
+  let wire1 = parseWire w1
+  let wire2 = parseWire w2
+  let path1 = expandPath (0, 0) wire1
+  let path2 = expandPath (0, 0) wire2
+  let intersections = findIntersections path1 path2
+  let partialTotalSteps = totalSteps path1 path2
+  let x = zip intersections (map partialTotalSteps intersections)
+  let u = sortBy fewestStepsComparator x
+  snd (head u)
+
+fewestStepsComparator a b = compare (snd a) (snd b)
+
+totalSteps :: [(Int, Int)] -> [(Int, Int)] -> (Int, Int) -> Int
+totalSteps path1 path2 intersection = do
+  let s1 = fromMaybe 0 (elemIndex intersection path1)
+  let s2 = fromMaybe 0 (elemIndex intersection path2)
+  s1 + s2
 
 closestCrossDistance :: String -> String -> Int
 closestCrossDistance w1 w2 = do
